@@ -1,6 +1,6 @@
 import json
 def save_db(data):
-        with ("database.json", "w") as f:
+        with open("database.json", "w") as f:
             return json.dump(data, f)
 def load_db():
     try:
@@ -13,4 +13,4 @@ def load_db():
             "investments": []
         }
         save_db(default)
-        return default
+        return default      
