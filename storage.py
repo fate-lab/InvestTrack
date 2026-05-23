@@ -6,11 +6,12 @@ def load_db():
     try:
         with open("database.json", "r") as f:
             return json.load(f)
-    except FileNotFoundError:
+    except (FileNotFoundError, json.JSONDecodeError):
         default = {
             "balance": 0.0,
             "transactions": [],
             "investments": []
         }
+        
         save_db(default)
         return default      
