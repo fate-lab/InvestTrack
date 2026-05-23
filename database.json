@@ -1,1 +1,0 @@
-{"balance": 100.0, "transactions": [{"id": 1, "type": "income", "amount": 100.0, "category": "Food", "date": "2026-05-23T16:58:09.958797"}, {"id": 2, "type": "expense", "amount": 100.0, "category": "Food", "date": "2026-05-23T16:59:37.895384"}, {"id": 3, "type": "income", "amount": 100.0, "category": "Food", "date": "2026-05-23T17:00:02.469638"}], "investments": []}
