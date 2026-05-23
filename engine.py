@@ -24,3 +24,12 @@ def compound_interest(amount, rate, years, periods_per_year=1):
     period_rate = rate / 100.0 / periods_per_year
     periods = int(years * periods_per_year)
     return amount * (1 + period_rate) ** periods
+def get_diversification(data):
+    category_totals = {}
+    for t in data["transactions"]:
+        if t["type"] == "expense":
+            category_totals[t["category"]] = category_totals.get(t["category"], 0) + t["amount"]
+    total_expenses = sum(category_totals.values())
+    if total_expenses == 0:
+        return {}
+    return {cat: round((amt / total_expenses) * 100, 2) for cat, amt in category_totals.items()}
