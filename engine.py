@@ -17,3 +17,10 @@ def get_stats(data):
         "total_income": income,
         "total_expenses": expenses
     }
+def compound_interest(amount, rate, years, periods_per_year=1):
+    ## rate in %
+    if periods_per_year <= 0:
+        raise ValueError("periods_per_year must be a positive integer")
+    period_rate = rate / 100.0 / periods_per_year
+    periods = int(years * periods_per_year)
+    return amount * (1 + period_rate) ** periods
