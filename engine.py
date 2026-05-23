@@ -9,4 +9,11 @@ def add_transaction(data, trans_type, amount, category):
         "date": datetime.now().isoformat()})
     data["balance"] += amount if trans_type == "income" else -amount
     return data
-    
+def get_stats(data):
+    income = sum(t["amount"] for t in data["transactions"] if t["type"] == "income")
+    expenses = sum(t["amount"] for t in data["transactions"] if t["type"] == "expense")
+    return {
+        "total_profit": income - expenses,
+        "total_income": income,
+        "total_expenses": expenses
+    }
