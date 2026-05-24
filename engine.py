@@ -9,6 +9,17 @@ def add_transaction(data, trans_type, amount, category):
         "date": datetime.now().isoformat()})
     data["balance"] += amount if trans_type == "income" else -amount
     return data
+def add_investment(data, asset, ticker, shares, buy_price, yearly_yield):
+    investments = data["investments"]
+    data["investments"].append({
+        "id": max(i["id"] for i in investments) + 1 if investments else 1,
+        "asset": asset,
+        "ticker": ticker,
+        "shares": shares,
+        "buy_price": buy_price,
+        "yearly_yield": yearly_yield,
+        "date": datetime.now().isoformat()})
+    return data 
 def get_stats(data):
     income = sum(t["amount"] for t in data["transactions"] if t["type"] == "income")
     expenses = sum(t["amount"] for t in data["transactions"] if t["type"] == "expense")
@@ -24,6 +35,20 @@ def compound_interest(amount, rate, years, periods_per_year=1):
     period_rate = rate / 100.0 / periods_per_year
     periods = int(years * periods_per_year)
     return amount * (1 + period_rate) ** periods
+def get_invest_forecast(data, years):
+    forecast = []
+    for inv in data["investments"]:
+        future_value = compound_interest(
+            inv["buy_price"] * inv["shares"],
+            inv["yearly_yield"],
+            years
+        )
+        forecast.append({
+            "asset": inv["asset"],
+            "ticker": inv["ticker"],
+            "future_value": round(future_value, 2)
+        })
+    return forecast
 def get_diversification(data):
     category_totals = {}
     for t in data["transactions"]:
