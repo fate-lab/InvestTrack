@@ -1,5 +1,7 @@
 import requests
 import os
+from dotenv import load_dotenv
+load_dotenv()
 def get_current_price(ticker):
     try:
         url = f"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={ticker}&apikey={os.getenv('API_KEY')}"
@@ -9,5 +11,4 @@ def get_current_price(ticker):
         price = data["Global Quote"]["05. price"]
         return float(price)
     except (requests.RequestException, KeyError):
-        print(f"Error fetching price for {ticker}.")
         return None

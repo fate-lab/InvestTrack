@@ -58,3 +58,5 @@ def get_diversification(data):
     if total_expenses == 0:
         return {}
     return {cat: round((amt / total_expenses) * 100, 2) for cat, amt in category_totals.items()}
+def get_real_profit(investment, current_price):
+    return (current_price - investment["buy_price"]) * investment["shares"]
