@@ -11,4 +11,3 @@ def get_current_price(ticker):
     except (requests.RequestException, KeyError):
         print(f"Error fetching price for {ticker}.")
         return None
-print(get_current_price("IBM"))
