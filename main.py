@@ -1,5 +1,6 @@
 from storage import load_db, save_db
-from engine import add_transaction, get_stats, compound_interest, get_diversification, add_investment, get_invest_forecast
+from engine import add_transaction, get_stats, compound_interest, get_diversification, add_investment, get_invest_forecast, get_real_profit
+from api import get_current_price
 data = load_db()
 while True:
     print("\n1. Add Transaction\n2. View Stats\n3. Calculate Compound Interest\n4. View Diversification\n5. Manage Investments\n6. Exit")
@@ -37,7 +38,7 @@ while True:
             for cat, perc in diversification.items():
                 print(f"{cat}: {perc}%")
     elif choice == "5":
-        print("1. Add Investment\n2. View Investment Forecast")
+        print("1. Add Investment\n2. View Investment Forecast\n3. Calculate Real Profit")
         inv_choice = input("Choose an option: ")
         if inv_choice == "1":
             asset = input("Asset Name: ")
@@ -61,6 +62,14 @@ while True:
                 print("Investment Forecast:")
                 for f in forecast:
                     print(f"{f['asset']} ({f['ticker']}): Future Value = {f['future_value']}")
+        elif inv_choice == "3":
+            for inv in data["investments"]:
+                current_price = get_current_price(inv["ticker"])
+                if current_price is not None:
+                    real_profit = get_real_profit(inv, current_price)
+                    print(f"{inv['asset']} ({inv['ticker']}): Real Profit = {real_profit:.2f}")
+                else:
+                    print(f"Could not fetch current price for {inv['ticker']}.")
     elif choice == "6":
         print("Exiting...")
         break
