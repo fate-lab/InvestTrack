@@ -1,5 +1,5 @@
 from storage import load_db, save_db
-from engine import add_transaction, get_stats, compound_interest, get_diversification, add_investment, get_invest_forecast, get_real_profit
+from engine import add_transaction, get_stats, compound_interest, get_diversification, add_investment, get_invest_forecast, get_real_profit, get_total_gain_loss
 from api import get_current_price
 data = load_db()
 while True:
@@ -67,7 +67,8 @@ while True:
                 current_price = get_current_price(inv["ticker"])
                 if current_price is not None:
                     real_profit = get_real_profit(inv, current_price)
-                    print(f"{inv['asset']} ({inv['ticker']}): Real Profit = {real_profit:.2f}")
+                    total_gain_loss = get_total_gain_loss(inv, current_price)
+                    print(f"{inv['asset']} ({inv['ticker']}): Real Profit = {real_profit:.2f}, Total Gain/Loss = {total_gain_loss:.2f}%")
                 else:
                     print(f"Could not fetch current price for {inv['ticker']}.")
     elif choice == "6":
